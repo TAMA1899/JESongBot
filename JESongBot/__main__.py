@@ -22,19 +22,16 @@ from JESongBot import bot
 from JESongBot import LOGGER
 
 pm_start_text = """
-Heya [{}](tg://user?id={}), I'm Song Bot 🎵
+Heya [{}](tg://user?id={}), 
+Saya adalah Bot untuk mendownload Lagu. 
 
-Do /help for know about me!
-
-A bot by **@Infinity_BOTs**
+Ketik /help untuk cara penggunaannya!
 """
 
 help_text = """
-I can download HQ songs from YouTube Music
+Hello, Saya akan membantumu download lagu. 
 
-**Syntax** - `/song [song name]`
-
-A bot by **@Infinity_BOTs**
+**Ketik** /song [judul lagu]
 """
 
 @bot.on_message(filters.command("start") & ~filters.edited)
@@ -45,19 +42,20 @@ async def start(client, message):
     if message.chat.type == "private":
         btn = InlineKeyboardMarkup(
             [
-                [
-                    InlineKeyboardButton(
-                        text="Source", url="https://github.com/ImJanindu/JESongBot"
+                [ InlineKeyboardButton(
+                        text="☕ ᴏᴡɴᴇʀ", url="https://github.com/justthetech"
                     ),
                     InlineKeyboardButton(
-                        text="Dev", url="https://t.me/JEBotZ"
-                    )
-                ]
+                        text="ᴜᴘᴅᴀᴛᴇ ☕", url="https://t.me/robotmusicupdate"
+                    )], 
+                [ InlineKeyboardButton(
+                        text="⁉️ ᴛᴀᴍʙᴀʜᴋᴀɴ ᴋᴇ ɢʀᴜʙ ⁉️", url="https://t.me/"
+                    )] 
             ]
         )
         await message.reply(pm_start_text.format(name, user_id), reply_markup=btn)
     else:
-        start_text = "Heya [{}](tg://user?id={}), Song Bot is online ✅"
+        start_text = "Hello Friends, [{}](tg://user?id={}), 𝐌𝐮𝐬𝐢𝐜𝐃𝐨𝐰𝐧𝐥𝐨𝐚𝐝𝐞𝐫 is online ✅"
         await message.reply(start_text.format(name, user_id))
     
 @bot.on_message(filters.command("help") & ~filters.edited)
@@ -65,5 +63,5 @@ async def start(client, message):
     await message.reply(help_text)
 
 bot.start()
-LOGGER.info("JESongBot is online.")
+LOGGER.info("𝐌𝐮𝐬𝐢𝐜𝐃𝐨𝐰𝐧𝐥𝐨𝐚𝐝𝐞𝐫 is online.")
 idle()
