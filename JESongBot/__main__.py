@@ -29,8 +29,6 @@ Ketik /help untuk cara penggunaannya!
 """
 
 help_text = """
-Hello, Saya akan membantumu download lagu. 
-
 **Ketik** /song [judul lagu]
 """
 
