@@ -18,9 +18,11 @@ import requests
 import aiohttp
 import youtube_dl
 from JESongBot import bot
-from pyrogram import filters, Client
+from pyrogram import filters, Client 
 from youtube_search import YoutubeSearch
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, InputTextMessageContent
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, InputTextMessageContent, Message
+from pyrogram.errors import FloodWait, MessageNotModified
+from youtubesearchpython import SearchVideos
 
 def time_to_seconds(time):
     stringt = str(time)
