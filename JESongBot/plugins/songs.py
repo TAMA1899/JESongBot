@@ -33,7 +33,7 @@ async def song(client, message):
     for i in message.command[1:]:
         query += ' ' + str(i)
     print(query)
-    shed = message.reply("🔎 Finding the song...")
+    shed = message.reply("🔎 Mencari Lagu...")
     ydl_opts = {
        "format": "bestaudio[ext=m4a]",
        "geo-bypass": True,
@@ -56,22 +56,22 @@ async def song(client, message):
         channel = results[0]["channel"]
     except Exception as e:
         shed.edit(
-            "❌ Found Nothing.\n\nTry another keywork or maybe spell it properly."
+            "❌ Lagu Tidak Ditemukan."
         )
         print(str(e))
         return
-    shed.edit("📥 Downloading...")
+    shed.edit("📥 Sedang Mendownload Lagu...")
     try:
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             info_dict = ydl.extract_info(link, download=False)
             audio_file = ydl.prepare_filename(info_dict)
             ydl.process_info(info_dict)
-        rep = '@JEBotZ'
+        rep = '✔️ Lagu Berhasil Didownload'
         secmul, dur, dur_arr = 1, 0, duration.split(':')
         for i in range(len(dur_arr)-1, -1, -1):
             dur += (int(dur_arr[i]) * secmul)
             secmul *= 60
-        shed.edit("📤 Uploading...")
+        shed.edit("📤 Mengupload...")
         s = message.reply_audio(audio_file, caption=rep, thumb=thumb_name, parse_mode='md', title=title, duration=dur, performer=channel)
         shed.delete()
     except Exception as e:
