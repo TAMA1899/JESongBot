@@ -29,53 +29,56 @@ def time_to_seconds(time):
 @bot.on_message(filters.command("song") & ~filters.edited)
 async def song(client, message):
 
-    query = ''
+    user_id = message.from_user.id
+    user_name = message.from_user.first_name
+    rpk = "[" + user_name + "](tg://user?id=" + str(user_id) + ")"
+
+    query = ""
     for i in message.command[1:]:
-        query += ' ' + str(i)
+        query += " " + str(i)
     print(query)
-    shed = message.reply("🔎 Mencari Lagu...")
-    ydl_opts = {
-       "format": "bestaudio[ext=m4a]",
-       "geo-bypass": True,
-       "nocheckcertificate": True,
-       "outtmpl": "downloads/%(id)s.%(ext)s",
-       }
+    m = message.reply("🔎 **Mencari** lagu...")
+    ydl_opts = {"format": "bestaudio[ext=m4a]"}
     try:
         results = YoutubeSearch(query, max_results=1).to_dict()
         link = f"https://youtube.com{results[0]['url_suffix']}"
-        #print(results)
-        title = results[0]["title"][:40]       
+        # print(results)
+        title = results[0]["title"][:40]
         thumbnail = results[0]["thumbnails"][0]
-        thumb_name = f'thumb{title}.jpg'
+        thumb_name = f"thumb{title}.jpg"
         thumb = requests.get(thumbnail, allow_redirects=True)
-        open(thumb_name, 'wb').write(thumb.content)
+        open(thumb_name, "wb").write(thumb.content)
 
         duration = results[0]["duration"]
-        url_suffix = results[0]["url_suffix"]
-        views = results[0]["views"]
-        channel = results[0]["channel"]
+        results[0]["url_suffix"]
+        results[0]["views"]
+
     except Exception as e:
-        shed.edit(
-            "❌ Lagu Tidak Ditemukan."
-        )
+        m.edit("❌ **Lagu** Tidak Ditemukan.")
         print(str(e))
         return
-    shed.edit("📥 Sedang Mendownload Lagu...")
+    m.edit("📥 **Sedang** Mendownload Lagu...")
     try:
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             info_dict = ydl.extract_info(link, download=False)
             audio_file = ydl.prepare_filename(info_dict)
             ydl.process_info(info_dict)
-        rep = '✔️ Lagu Berhasil Didownload'
-        secmul, dur, dur_arr = 1, 0, duration.split(':')
-        for i in range(len(dur_arr)-1, -1, -1):
-            dur += (int(dur_arr[i]) * secmul)
+        rep = "**🆗 Download Lagu Berhasil**"
+        secmul, dur, dur_arr = 1, 0, duration.split(":")
+        for i in range(len(dur_arr) - 1, -1, -1):
+            dur += int(dur_arr[i]) * secmul
             secmul *= 60
-        shed.edit("📤 Mengupload...")
-        s = message.reply_audio(audio_file, caption=rep, thumb=thumb_name, parse_mode='md', title=title, duration=dur, performer=channel)
-        shed.delete()
+        message.reply_audio(
+            audio_file,
+            caption=rep,
+            thumb=thumb_name,
+            parse_mode="md",
+            title=title,
+            duration=dur,
+        )
+        m.delete()
     except Exception as e:
-        shed.edit("❌ Error")
+        m.edit("❌ Error")
         print(e)
 
     try:
