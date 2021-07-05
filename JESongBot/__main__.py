@@ -49,7 +49,7 @@ async def start(client, message):
                         text="ᴜᴘᴅᴀᴛᴇ ☕", url="https://t.me/robotmusicupdate"
                     )], 
                 [ InlineKeyboardButton(
-                        text="⁉️ ᴛᴀᴍʙᴀʜᴋᴀɴ ᴋᴇ ɢʀᴜʙ ⁉️", url="https://t.me/"
+                        text="⁉️ ᴛᴀᴍʙᴀʜᴋᴀɴ ᴋᴇ ɢʀᴜʙ ⁉️", url="https://t.me/lagudownloader_bot?startgroup=true"
                     )] 
             ]
         )
